@@ -10,7 +10,32 @@ Immer + Hooks + Context + TypeScript = Low boilerplate, Immutable, Editor-friend
 
 # What/why/how?
 
-You shouldn't use this on anything important... but here's how it should work
+You shouldn't use this on anything important... but here's how it should work:
+
+```typescript
+type CounterType = { count: number };
+
+const { StateProvider, useImmutableContext } = createImmutableContext<
+  CounterType
+>({ count: 0 });
+
+const Counter = () => {
+  const { dispatch, state } = useImmutableContext();
+  const increment = () =>
+    dispatch(s => {
+      s.count++;
+    });
+  return <button onClick={increment}>Count: {state.count}</button>;
+};
+
+const App = () => (
+  <StateProvider>
+    <Counter />
+  </StateProvider>
+);
+```
+
+Longer example/step-by-step:
 
 ### 1. Define a type for your state:
 
