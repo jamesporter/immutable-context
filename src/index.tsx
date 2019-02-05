@@ -13,6 +13,12 @@ type cICRet<T> = {
 /**
  * @param defaultState the initial state
  * @param onUpdate optional hook for state changes
+ *
+ * @returns { StateProvider, useImmutableContext } the first is a provider, the second a hook which gives you { state, dispatch }
+ *
+ * dispatch should be a function accepting your state type
+ *
+ * Defining a specific State type and passing createImmutableContext<ExampleType> is recommended
  */
 export default function createImmutableContext<T>(
   defaultState: T,
