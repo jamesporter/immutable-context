@@ -132,3 +132,43 @@ class App extends Component {
   }
 }
 ```
+
+### PS
+
+In a real application (ha!) would do something more like, probably in entirely different file:
+
+```typescript
+const multiUpdate = dispatch => () =>
+  dispatch(s => {
+    s.deeply.nested.thing.like--;
+    s.count++;
+  });
+```
+
+Yes, just vanilla JS, very testable (and deletable). Then the component becomes:
+
+```typescript
+const DeepDiveUpdate = () => {
+  const { dispatch } = useImmutableContext();
+  const onUpdate = multiUpdate(dispatch);
+  return (
+    <div>
+      <button onClick={onUpdate}>Dive!</button>
+    </div>
+  );
+};
+```
+
+For async stuff:
+
+```typescript
+const asyncMultiUpdate = dispatch => async () => {
+  dispatch(s => {
+    s.count++;
+  });
+  await longRunningThing();
+  dispatch(s => {
+    s.deeply.nested.thing.like--;
+  }
+}
+```
