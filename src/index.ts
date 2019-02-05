@@ -41,7 +41,7 @@ export default function createImmutableContext<T>(
     const [value, setV] = useState(defaultState);
     state = value;
     setValue = setV;
-    return <Provider value={value}>{children}</Provider>;
+    return React.createElement(Provider, { value }, children);
   }
 
   function useImmutableContext() {
