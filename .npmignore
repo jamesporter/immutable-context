@@ -1,2 +1,4 @@
 index.ts
 test/index.test.ts
+jest.config.js
+tsconfig.json
