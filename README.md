@@ -158,6 +158,8 @@ class App extends Component {
 }
 ```
 
+[This example](https://github.com/jamesporter/immutable-context-example) in a create-react-app project.
+
 ### PS
 
 In a real application (ha!) would do something more like, probably in entirely different file:
