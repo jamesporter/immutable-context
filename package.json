@@ -1,0 +1,45 @@
+{
+  "name": "immutable-context",
+  "version": "0.1.0",
+  "description": "Immer + Hooks + Context + TypeScript = Low boilerplate, Immutable, Editor-friendly State management?",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "build": "tsc --declaration",
+    "prepublish": "npm run build",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamesporter/immutable-context.git"
+  },
+  "keywords": [
+    "immer",
+    "immutable",
+    "state",
+    "typescript"
+  ],
+  "author": "James Porter <james@amimetic.co.uk>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jamesporter/immutable-context/issues"
+  },
+  "homepage": "https://github.com/jamesporter/immutable-context#readme",
+  "devDependencies": {
+    "@types/jest": "^23.3.13",
+    "jest": "^24.0.0",
+    "ts-jest": "^23.10.5",
+    "@types/react": "^16.8.1",
+    "@types/react-dom": "^16.0.11",
+    "typescript": "^3.3.1"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1"
+  },
+  "dependencies": {
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1",
+    "immer": "^2.0.0"
+  }
+}
