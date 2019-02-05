@@ -1,6 +1,5 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
 import produce from "immer";
-import "./App.css";
 
 type cICRet<T> = {
   StateProvider: ({ children }: { children: ReactNode }) => ReactNode;
