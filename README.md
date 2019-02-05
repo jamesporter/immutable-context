@@ -2,7 +2,11 @@
 
 Experiment in state management
 
+`npm i -s immutable-context`
+
 Immer + Hooks + Context + TypeScript = Low boilerplate, Immutable, Editor-friendly State management?
+
+[https://www.npmjs.com/package/immutable-context](https://www.npmjs.com/package/immutable-context)
 
 # What/why/how?
 
