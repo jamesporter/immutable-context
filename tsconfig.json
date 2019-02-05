@@ -5,8 +5,10 @@
     "outDir": "./lib",
     "rootDir": "./src",
     "strict": true,
+    "removeComments": true,
+    "declaration": true,
     "esModuleInterop": true,
-    "jsx": "preserve"
+    "jsx": "react"
   },
   "exclude": ["node_modules", "lib", "test"]
 }
