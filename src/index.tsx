@@ -2,7 +2,7 @@ import React, { ReactNode, createContext, useContext, useState } from "react";
 import produce from "immer";
 
 type cICRet<T> = {
-  StateProvider: ({ children }: { children: ReactNode }) => ReactNode;
+  StateProvider: ({ children }: { children: ReactNode }) => JSX.Element;
   useImmutableContext: () => {
     state: T;
     dispatch: (update: (state: T) => void) => void;
