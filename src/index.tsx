@@ -1,11 +1,15 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
 import produce from "immer";
 
-export type cICRet<T> = {
+export type ICApply<T> = {
+  (update: (state: T) => void): void;
+};
+
+export type createICRet<T> = {
   StateProvider: ({ children }: { children: ReactNode }) => JSX.Element;
   useImmutableContext: () => {
     state: T;
-    apply: (update: (state: T) => void) => void;
+    apply: ICApply<T>;
   };
 };
 
@@ -29,7 +33,7 @@ export type ImmutableStateOptions<T> = {
 export default function createImmutableContext<T>(
   defaultState: T,
   options: ImmutableStateOptions<T> = {}
-): cICRet<T> {
+): createICRet<T> {
   const _Context = createContext(defaultState);
   const { Provider } = _Context;
 
