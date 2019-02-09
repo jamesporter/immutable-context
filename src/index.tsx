@@ -1,27 +1,34 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
 import produce from "immer";
 
-type cICRet<T> = {
+export type cICRet<T> = {
   StateProvider: ({ children }: { children: ReactNode }) => JSX.Element;
   useImmutableContext: () => {
     state: T;
-    dispatch: (update: (state: T) => void) => void;
+    apply: (update: (state: T) => void) => void;
   };
+};
+
+export type ImmutableStateOptions<T> = {
+  willUpdate?: (state: T, update: Function) => void;
+  onUpdate?: (state: T) => void;
+  setSetState?: (onSetState: (state: T) => void) => void;
+  onInitialize?: (state: T) => void;
 };
 
 /**
  * @param defaultState the initial state
- * @param onUpdate optional hook for state changes
+ * @param onUpdate optional handler for state changes
  *
- * @returns { StateProvider, useImmutableContext } the first is a provider, the second a hook which gives you { state, dispatch }
+ * @returns { StateProvider, useImmutableContext } the first is a provider, the second a hook which gives you { state, apply }
  *
- * dispatch should be a function accepting your state type
+ * apply should be a function accepting your state type
  *
  * Defining a specific State type and passing createImmutableContext<ExampleType> is recommended
  */
 export default function createImmutableContext<T>(
   defaultState: T,
-  onUpdate?: (state: T) => void
+  options: ImmutableStateOptions<T> = {}
 ): cICRet<T> {
   const _Context = createContext(defaultState);
   const { Provider } = _Context;
@@ -29,26 +36,43 @@ export default function createImmutableContext<T>(
   let state: T = defaultState;
   let setValue: ((state: T) => void) | null = null;
 
-  function dispatch(updateFn: (state: T) => void) {
+  function apply(updateFn: (state: T) => void) {
     if (state) {
+      options.willUpdate && options.willUpdate(state, updateFn);
       state = produce(state, updateFn);
       setValue && setValue(state);
-      onUpdate && onUpdate(state);
+      options.onUpdate && options.onUpdate(state);
     }
+  }
+
+  if (options.setSetState) {
+    function _setState(newState: T) {
+      if (setValue) {
+        setValue(state);
+      } else {
+        console.error(
+          `Trying to override state with ${newState} but StateProvider has not yet been created.`
+        );
+      }
+    }
+    options.setSetState(_setState);
   }
 
   function StateProvider({ children }: { children: ReactNode }) {
     const [value, setV] = useState(defaultState);
     state = value;
     setValue = setV;
+    options.onInitialize && options.onInitialize(value);
     return <Provider value={value}>{children}</Provider>;
   }
 
   function useImmutableContext() {
     const state = useContext(_Context);
 
-    return { state, dispatch };
+    return { state, apply };
   }
 
   return { StateProvider, useImmutableContext };
 }
+
+export { logger, historyLogger, undoManager } from "./tools";

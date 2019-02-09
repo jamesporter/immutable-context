@@ -20,9 +20,9 @@ const { StateProvider, useImmutableContext } = createImmutableContext<
 >({ count: 0 });
 
 const Counter = () => {
-  const { dispatch, state } = useImmutableContext();
+  const { apply, state } = useImmutableContext();
   const increment = () =>
-    dispatch(s => {
+    apply(s => {
       s.count++;
     });
   return <button onClick={increment}>Count: {state.count}</button>;
@@ -71,9 +71,11 @@ const { StateProvider, useImmutableContext } = createImmutableContext<
       }
     }
   },
-  s => {
-    history.push(s);
-    console.log(history);
+  options: {
+    onUpdate: s => {
+      history.push(s);
+      console.log(history);
+    }
   }
 );
 ```
@@ -85,14 +87,14 @@ const { StateProvider, useImmutableContext } = createImmutableContext<
 
 ```typescript
 const CountThing = () => {
-  const { dispatch, state } = useImmutableContext();
+  const { apply, state } = useImmutableContext();
 
   return (
     <div>
       <p>{state.count}</p>
       <button
         onClick={() =>
-          dispatch(s => {
+          apply(s => {
             s.count++;
           })
         }
@@ -105,29 +107,17 @@ const CountThing = () => {
 };
 ```
 
-This is a bit verbose:
-
-```typescript
-onClick={() =>
-  dispatch(s => {
-    s.count++;
-  })
-}
-```
-
-For synchronous actions I could have done some kind of API like `genDispatch(fnToBeDispatched)` but I haven't figured out how to do async stuff nicely so for now just exposing a generic thing that could be called multiple times by something asynchronous.
-
-Another example component:
+Another example component (this time not actually using state so no need to destructure):
 
 ```typescript
 const DeepDiveUpdate = () => {
-  const { dispatch } = useImmutableContext();
+  const { apply } = useImmutableContext();
 
   return (
     <div>
       <button
         onClick={() =>
-          dispatch(s => {
+          apply(s => {
             s.deeply.nested.thing.like--;
             s.count++;
           })
@@ -165,8 +155,8 @@ class App extends Component {
 In a real application (ha!) would do something more like, probably in entirely different file:
 
 ```typescript
-const multiUpdate = dispatch => () =>
-  dispatch(s => {
+const multiUpdate = apply => () =>
+  apply(s => {
     s.deeply.nested.thing.like--;
     s.count++;
   });
@@ -176,8 +166,8 @@ Yes, just vanilla JS, very testable (and deletable). Then the component becomes:
 
 ```typescript
 const DeepDiveUpdate = () => {
-  const { dispatch } = useImmutableContext();
-  const onUpdate = multiUpdate(dispatch);
+  const { apply } = useImmutableContext();
+  const onUpdate = multiUpdate(apply);
   return (
     <div>
       <button onClick={onUpdate}>Dive!</button>
@@ -189,12 +179,12 @@ const DeepDiveUpdate = () => {
 For async stuff:
 
 ```typescript
-const asyncMultiUpdate = dispatch => async () => {
-  dispatch(s => {
+const asyncMultiUpdate = apply => async () => {
+  apply(s => {
     s.count++;
   });
   await longRunningThing();
-  dispatch(s => {
+  apply(s => {
     s.deeply.nested.thing.like--;
   }
 }

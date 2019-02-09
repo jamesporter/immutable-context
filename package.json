@@ -1,6 +1,6 @@
 {
   "name": "immutable-context",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Immer + Hooks + Context + TypeScript = Low boilerplate, Immutable, Editor-friendly State management?",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -32,12 +32,12 @@
     "@types/react": "^16.8.1",
     "@types/react-dom": "^16.0.11",
     "typescript": "^3.3.1",
-    "react": "^16.8.0-alpha.1",
-    "react-dom": "^16.8.0-alpha.1"
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
   },
   "peerDependencies": {
-    "react": "^16.8.0-alpha.1",
-    "react-dom": "^16.8.0-alpha.1"
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
   },
   "dependencies": {
     "immer": "^2.0.0"
