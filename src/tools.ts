@@ -30,7 +30,7 @@ export function undoManager<T>(): {
   historySize: () => number;
 } {
   let history: T[] = [];
-  let index = 0;
+  let index = -1;
   let setState: null | ((state: T) => void) = null;
 
   let appendToHistory = (state: T) => {
