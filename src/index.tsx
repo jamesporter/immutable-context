@@ -61,8 +61,8 @@ export default function createImmutableContext<T>(
   function StateProvider({ children }: { children: ReactNode }) {
     const [value, setV] = useState(defaultState);
     state = value;
+    if (!setValue) options.onInitialize && options.onInitialize(value);
     setValue = setV;
-    options.onInitialize && options.onInitialize(value);
     return <Provider value={value}>{children}</Provider>;
   }
 
