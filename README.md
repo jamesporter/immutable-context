@@ -10,7 +10,7 @@ Immer + Hooks + Context + TypeScript = Low boilerplate, Immutable, Editor-friend
 
 # What/why/how?
 
-You shouldn't use this on anything important... but here's how it should work:
+Here's how it works (or skip to a [Code Sandbox Example](https://codesandbox.io/s/intelligent-kowalevski-6evy9?fontsize=14)
 
 ```typescript
 type CounterType = { count: number };
